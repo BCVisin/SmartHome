@@ -16,6 +16,8 @@ class trigger_events():
 	def toggle_garage_door(self):
 
 		if self.gpio_enabled:
+			import RPi.GPIO as GPIO
+
 			GPIO.setmode(GPIO.BCM)
 			GPIO.setup(gpio_pins.GARAGE_OPENER, GPIO.OUT, initial=GPIO.HIGH)
 			GPIO.output(gpio_pins.GARAGE_OPENER, GPIO.LOW)

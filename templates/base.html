@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+
+    {% include "header.html" %}
+
+  </head>
+
+  <body>
+
+  	{% include "nav.html" %}
+    <div class="container">
+      
+      {% block content %}{% endblock %}
+
+      {% include "footer.html" %}
+      
+    </div> <!-- /container -->
+
+
+    <!-- Bootstrap core JavaScript
+    ================================================== -->
+    <!-- Placed at the end of the document so the pages load faster -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+    <script src="{{ STATIC_URL }}dist/js/bootstrap.min.js"></script>
+    <!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
+    <script src="{{ STATIC_URL }}assets/js/ie10-viewport-bug-workaround.js"></script>
+    
+  </body>
+</html>

@@ -1,0 +1,82 @@
+{% extends "base.html" %}
+
+{% block title %}HOME{% endblock %}
+
+{% block content %}      
+      <div class="row" style="padding-top:10px;">
+      	<div class="col-md-4">
+        	<div class="panel panel-default">
+            	
+                <div class="panel-heading">
+                	Warnings
+                </div>
+                
+                <div class="panel-body">
+                	<p><div class="alert alert-danger" role="alert"><strong>Warning!</strong> The Garage Door is open.</div></p>
+                    <p><div class="alert alert-info" role="alert"><strong>Warning!</strong> The Sprinklers are on.</div></p>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4">
+         	<div class="panel panel-default">
+            	
+                <div class="panel-heading">
+                	Control Panel
+                </div>
+                
+                <div class="panel-body">
+                	<table class="table">
+                    	<tr>
+                        	<td>Garage Door:</td>
+                            <td><a class="btn btn-sm btn-danger" href="#" role="button">Close</a></td>
+                        </tr>
+                        <tr>
+                        	<td>Outdoor Lights:</td>
+                            <td><a class="btn btn-sm btn-success" href="#" role="button">Turn On</a></td>
+                        </tr>
+                        <tr>
+                        	<td>X-mas Lights:</td>
+                            <td><a class="btn btn-sm btn-success" href="#" role="button">Turn On</a></td>
+                        </tr>
+                        <tr>
+                        	<td>Sprinklers:</td>
+                            <td><a class="btn btn-sm btn-warning" href="#" role="button">Running</a></td>
+                        </tr>
+                        
+                    </table>
+					
+                </div>
+            </div>
+         </div>
+         <div class="col-md-4">
+         	
+            <div class="panel panel-default">
+            	
+                <div class="panel-heading">
+                	Weather
+                </div>
+                
+                <div class="panel-body">
+                	<table class="table">
+                    	<tr>
+                        	<td>Sunrise:</td>
+                            <td>6:04 am</td>
+                        </tr>
+                        <tr>
+                        	<td>Sunset:</td>
+                            <td>5:30 pm</td>
+                        </tr>
+                        <tr>
+                        	<td>Precipitation:</td>
+                            <td>0%</td>
+                        </tr>
+                       
+                        
+                    </table>
+					
+                </div>
+            </div>
+            
+         </div>
+      </div>
+{% endblock %}

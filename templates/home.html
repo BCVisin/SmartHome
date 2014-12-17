@@ -2,81 +2,135 @@
 
 {% block title %}HOME{% endblock %}
 
-{% block content %}      
-      <div class="row" style="padding-top:10px;">
-      	<div class="col-md-4">
-        	<div class="panel panel-default">
-            	
-                <div class="panel-heading">
-                	Warnings
-                </div>
-                
-                <div class="panel-body">
-                	<p><div class="alert alert-danger" role="alert"><strong>Warning!</strong> The Garage Door is open.</div></p>
-                    <p><div class="alert alert-info" role="alert"><strong>Warning!</strong> The Sprinklers are on.</div></p>
-                </div>
-            </div>
-        </div>
-        <div class="col-md-4">
-         	<div class="panel panel-default">
-            	
-                <div class="panel-heading">
-                	Control Panel
-                </div>
-                
-                <div class="panel-body">
-                	<table class="table">
-                    	<tr>
-                        	<td>Garage Door:</td>
-                            <td><a class="btn btn-sm btn-danger" href="#" role="button">Close</a></td>
-                        </tr>
-                        <tr>
-                        	<td>Outdoor Lights:</td>
-                            <td><a class="btn btn-sm btn-success" href="#" role="button">Turn On</a></td>
-                        </tr>
-                        <tr>
-                        	<td>X-mas Lights:</td>
-                            <td><a class="btn btn-sm btn-success" href="#" role="button">Turn On</a></td>
-                        </tr>
-                        <tr>
-                        	<td>Sprinklers:</td>
-                            <td><a class="btn btn-sm btn-warning" href="#" role="button">Running</a></td>
-                        </tr>
-                        
-                    </table>
+{% block js %}
+
+var garage_door_open = {{garage_door_open}}
+
+function change_garage_status(garage_door_open){
+	
+	if (garage_door_open == true){
+		$("#garage-trigger").removeClass('btn-success btn-warning').addClass('btn-danger').text('Open')
+		$("#garage-alert").removeClass('alert-info alert-warning').addClass('alert-danger').html('<strong>Warning!</strong> The Garage Door is open.')
+	} else if (garage_door_open == false){
+		$("#garage-trigger").removeClass('btn-danger btn-warning').addClass('btn-success').text('Close')
+		$("#garage-alert").removeClass('alert-danger alert-warning').addClass('alert-info').text('The Garage Door is closed.')
+	} else if (garage_door_open == null){
+		$("#garage-trigger").removeClass('btn-success btn-danger').addClass('btn-warning').text('Moving...')
+		$("#garage-alert").removeClass('alert-info alert-danger').addClass('alert-warning').text('The Garage Door is moving...')
+	} else if (garage_door_open == 'unknown'){
+		$("#garage-trigger").removeClass('btn-success btn-danger').addClass('btn-danger').text('UNKNOWN')
+		$("#garage-alert").removeClass('alert-info alert-danger').addClass('alert-warning').html('<strong>Warning!</strong> The Garage Door is in an unknown status.')
+	}
+}
+
+
+$().ready(function(){
+
+	$("#garage-trigger").on("click", function() {
+
+		if (garage_door_open != null){
+
+			if (garage_door_open == true){
+				garage_door_open = null;
+			}else if(garage_door_open == false){
+				garage_door_open = null;	
+			}
+
+			change_garage_status(garage_door_open)
+
+			$.getJSON("/garage/trigger/", function(json) { 
+								garage_door_open = json.garage_door_open;
+								change_garage_status(garage_door_open);
+								 })
+		};
+	});
+});
+
+
+{% endblock %}
+
+{% block content %}			
+			<div class="row" style="padding-top:10px;">
+				<div class="col-md-4">
+					<div class="panel panel-default">
+							
+								<div class="panel-heading">
+									Status
+								</div>
+								
+								<div class="panel-body">
+									<p>
+									{% if garage_door_open %}
+									<div id="garage-alert" class="alert alert-danger" role="alert"><strong>Warning!</strong> The Garage Door is open.</div>
+									{% else %}
+									<div id="garage-alert" class="alert alert-info" role="alert">The Garage Door is closed.</div>
+									</p>
+									{% endif %}
+									
+									<p><div class="alert alert-info" role="alert"><strong>Warning!</strong> The Sprinklers are on.</div></p>
+								</div>
+						</div>
+				</div>
+				<div class="col-md-4">
+				 	<div class="panel panel-default">
+							
+								<div class="panel-heading">
+									Control Panel
+								</div>
+								
+								<div class="panel-body">
+									<table class="table">
+											<tr>
+													<td>Garage Door:</td>
+														<td><a id="garage-trigger" class="btn btn-sm {% if garage_door_open %}btn-danger{% else %}btn-success{% endif %}" href="#" role="button">{% if garage_door_open %}Close{% else %}Open{% endif %}</a></td>
+												</tr>
+												<tr>
+													<td>Outdoor Lights:</td>
+														<td><a class="btn btn-sm btn-success" href="#" role="button">Turn On</a></td>
+												</tr>
+												<tr>
+													<td>X-mas Lights:</td>
+														<td><a class="btn btn-sm btn-success" href="#" role="button">Turn On</a></td>
+												</tr>
+												<tr>
+													<td>Sprinklers:</td>
+														<td><a class="btn btn-sm btn-warning" href="#" role="button">Running</a></td>
+												</tr>
+												
+										</table>
 					
-                </div>
-            </div>
-         </div>
-         <div class="col-md-4">
-         	
-            <div class="panel panel-default">
-            	
-                <div class="panel-heading">
-                	Weather
-                </div>
-                
-                <div class="panel-body">
-                	<table class="table">
-                    	<tr>
-                        	<td>Sunrise:</td>
-                            <td>6:04 am</td>
-                        </tr>
-                        <tr>
-                        	<td>Sunset:</td>
-                            <td>5:30 pm</td>
-                        </tr>
-                        <tr>
-                        	<td>Precipitation:</td>
-                            <td>0%</td>
-                        </tr>
-                       
-                        
-                    </table>
+								</div>
+						</div>
+				 </div>
+				 <div class="col-md-4">
+				 	
+						<div class="panel panel-default">
+							
+								<div class="panel-heading">
+									Weather
+								</div>
+								
+								<div class="panel-body">
+									<table class="table">
+											<tr>
+													<td>Sunrise:</td>
+														<td>6:04 am</td>
+												</tr>
+												<tr>
+													<td>Sunset:</td>
+														<td>5:30 pm</td>
+												</tr>
+												<tr>
+													<td>Precipitation:</td>
+														<td>0%</td>
+												</tr>
+											 
+												
+										</table>
 					
-                </div>
-            </div>
-            
-         </div>
-      </div>
+								</div>
+						</div>
+						
+				 </div>
+			</div>
 {% endblock %}

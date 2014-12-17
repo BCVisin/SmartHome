@@ -3,5 +3,15 @@
 {% block title %}SPRINKLERS{% endblock %}
 
 {% block content %}
-      <p><div class="alert alert-danger" role="alert"><strong>Please Log In!</strong></div></p>
+			<p>
+				<div class="alert alert-danger" role="alert">
+					<strong>
+						{% if form.errors %}
+							Your username and password didn't match. Please try again.
+						{% else %}
+							Please log in.
+						{% endif %}
+					</strong>
+				</div>
+			</p>
 {% endblock %}

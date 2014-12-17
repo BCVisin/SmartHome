@@ -5,17 +5,30 @@ from django.http import HttpResponse
 from SmartHome import utils
 
 import json
+import time
 
 
-@user_passes_test(lambda u: u.has_perm('garage.trigger'), login_url='/?error=Your user does not have the required permissions to access the requested page.')
+@user_passes_test(lambda u: u.has_perm('garage.trigger'))
 def garage_door_trigger(request):
 
 	trigger_events = utils.trigger_events()
 
 	trigger_events.toggle_garage_door()
 
-	error = request.GET.get('error') or None
+	sense_events = utils.sense_events()
 
-	context = {'error': error}
+	time.sleep(5)
+
+	context = {'garage_door_open':sense_events.sense_garage_open()}
+
+	return HttpResponse(json.dumps(context))
+
+
+@user_passes_test(lambda u: u.has_perm('garage.view'))
+def garage_door_status(request):
+
+	sense_events = utils.sense_events()
+
+	context = {'garage_door_open':sense_events.sense_garage_open()}
 
 	return HttpResponse(json.dumps(context))

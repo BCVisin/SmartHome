@@ -62,3 +62,7 @@ target/
 
 #Ignore text editor created files
 *~
+
+#Settings files for dev and live
+settings_dev.py
+settings_live.py

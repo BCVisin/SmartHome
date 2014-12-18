@@ -3,11 +3,10 @@
 	<head>
 		{% include "header.html" %}
 	</head>
-
+	
 	<body>
-
 		{% include "nav.html" %}
-		<div class="container">
+		<div class="container" id="mainbody">
 			
 			{% block content %}{% endblock %}
 
@@ -24,9 +23,27 @@
 		<!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
 		<script src="{{ STATIC_URL }}assets/js/ie10-viewport-bug-workaround.js"></script>
 		
+		<script type="text/javascript" src="{{ STATIC_URL }}xpull/xpull.js"></script>
+		
 		<script>
 		{% block js %}{% endblock %}
 		</script>
+		
+		
+		<script>
+			$('#mainbody').xpull({
+				'pullThreshold':50,
+				'spinnerTimeout':0,
+				'callback':function(){
+					$.getJSON("/garage/status/", function(json) { 
+								garage_door_open = json.garage_door_open;
+								change_garage_status(garage_door_open);
+								$('#mainbody').data('plugin_xpull').reset();
+								 })
+				}
+			 });
+		</script>
+		
 		
 	</body>
 </html>

@@ -17,7 +17,8 @@ def garage_door_trigger(request):
 
 	sense_events = utils.sense_events()
 
-	time.sleep(10)
+	#how long it takes to open or close the garage
+	time.sleep(15)
 
 	context = {'garage_door_open':sense_events.sense_garage_open()}
 

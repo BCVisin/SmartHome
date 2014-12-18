@@ -41,9 +41,23 @@ class sense_events():
 		#return True if open, False if closed
 
 		if self.gpio_enabled:
-			pass
+			#if the garage is up the garage up senson will be 0
+			garage_up = not bool(GPIO.input(gpio_pins.GARAGE_SENSOR_UP))
 
-		#for now, return a random boolean
-		return bool(random.getrandbits(1))
+			#if the garage is down the garage down senson will be 0
+			garage_down = not bool(GPIO.input(gpio_pins.GARAGE_SENSOR_DOWN))
 
+			if garage_up:
+				if not garage_down:
+					return 'true'
+				else:
+					return 'unknown'
+
+			if garage_down:
+				if not garage_up:
+					return 'false'
+				else:
+					return 'unknown'
+
+		return 'unknown'
 

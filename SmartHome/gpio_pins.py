@@ -1,8 +1,8 @@
 #GPIO mapping of all the different input and output sensors and switches
 
 GARAGE_OPENER = 2
-GARGER_SENSOR_UP = 0
-GARGER_SENSOR_DOWN = 0
+GARAGE_SENSOR_UP = 17
+GARAGE_SENSOR_DOWN = 27
 
 CHRISTMAS_LIGHTS_ZONE_ONE = 0
 CHRISTMAS_LIGHTS_ZONE_TWO = 0

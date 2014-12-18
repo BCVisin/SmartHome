@@ -44,11 +44,17 @@ class sense_events():
 
 			import RPi.GPIO as GPIO
 
+			GPIO.setmode(GPIO.BCM)
+			GPIO.setup(gpio_pins.GARAGE_SENSOR_UP, GPIO.IN)
+			GPIO.setup(gpio_pins.GARAGE_SENSOR_DOWN, GPIO.IN)
+
 			#if the garage is up the garage up senson will be 0
 			garage_up = not bool(GPIO.input(gpio_pins.GARAGE_SENSOR_UP))
 
 			#if the garage is down the garage down senson will be 0
 			garage_down = not bool(GPIO.input(gpio_pins.GARAGE_SENSOR_DOWN))
+
+			GPIO.cleanup()
 
 			if garage_up:
 				if not garage_down:

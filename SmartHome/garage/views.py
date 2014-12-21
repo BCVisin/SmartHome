@@ -11,7 +11,7 @@ import time
 @user_passes_test(lambda u: u.has_perm('garage.trigger'))
 def garage_door_trigger(request):
 
-	trigger_events = utils.trigger_events()
+	trigger_events = utils.trigger_events(user=request.user)
 
 	trigger_events.toggle_garage_door()
 
@@ -28,7 +28,7 @@ def garage_door_trigger(request):
 @user_passes_test(lambda u: u.has_perm('garage.view'))
 def garage_door_status(request):
 
-	sense_events = utils.sense_events()
+	sense_events = utils.sense_events(user=request.user)
 
 	context = {'garage_door_open': sense_events.sense_garage_open()}
 

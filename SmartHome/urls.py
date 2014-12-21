@@ -5,6 +5,7 @@ from django.contrib import admin
 from django.conf import settings
 
 from SmartHome.garage import urls as garage_urls
+from SmartHome.lights import urls as lights_urls
 from django.views.generic.simple import direct_to_template
 
 admin.autodiscover()
@@ -22,6 +23,7 @@ urlpatterns = patterns('',
 		(r'^accounts/logout/$', 'django.contrib.auth.views.logout', {'next_page': '/'}),
 
 		url(r'^garage/', include(garage_urls)),
+		url(r'^lights/', include(lights_urls)),
 		(r'^manifest.json$', direct_to_template, {'extra_context': context, 'template': 'manifest.html', 'mimetype':'application/json'}),
 
 		url(r'^admin/doc/', include('django.contrib.admindocs.urls')),

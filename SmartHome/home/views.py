@@ -20,7 +20,7 @@ def home(request):
 
 	context = {'PROJECT_NAME': settings.PROJECT_NAME, 'PROJECT_TITLE': settings.PROJECT_TITLE}
 
-	sense_events = utils.sense_events()
+	sense_events = utils.sense_events(user=request.user)
 	context['garage_door_open'] = str(sense_events.sense_garage_open()).lower()
 
 	return render_to_response('home.html', context, context_instance=RequestContext(request))

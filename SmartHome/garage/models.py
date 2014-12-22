@@ -27,4 +27,4 @@ class garage_log(models.Model):
 	id = models.AutoField(primary_key=True)
 	user = models.ForeignKey(User)
 	action = models.IntegerField(choices=GARAGE_ACTIONS)
-	result = models.IntegerField(choices=GARAGE_RESULTS)
+	result = models.IntegerField(choices=GARAGE_RESULTS, null=True)

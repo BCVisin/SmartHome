@@ -35,10 +35,10 @@ class trigger_events():
 
 	def toggle_light(self, pin, state):
 
-		if pin not in [str(x) for x, _ in lights_log.LIGHT_IDS]:
+		if pin not in [x for x, _ in lights_log.LIGHT_IDS]:
 			return False
 
-		if state not in [str(x) for x, _ in lights_log.LIGHT_ACTIONS]:
+		if state not in [x for x, _ in lights_log.LIGHT_ACTIONS]:
 			return False
 
 		if self.gpio_enabled:
@@ -118,10 +118,10 @@ class sense_events():
 
 	def sense_light(self, pin):
 
-		if pin not in [str(x) for x, _ in lights_log.LIGHT_IDS]:
+		if pin not in [x for x, _ in lights_log.LIGHT_IDS]:
 			return False
 
-		state = 3
+		state = 2
 
 		if self.gpio_enabled:
 			import RPi.GPIO as GPIO

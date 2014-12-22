@@ -33,4 +33,4 @@ class lights_log(models.Model):
 	user = models.ForeignKey(User)
 	light_id = models.IntegerField(choices=LIGHT_IDS)
 	action = models.IntegerField(choices=LIGHT_ACTIONS)
-	result = models.IntegerField(choices=LIGHT_RESULTS)
+	result = models.IntegerField(choices=LIGHT_RESULTS, null=True)

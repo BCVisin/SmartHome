@@ -16,7 +16,7 @@ def lights_trigger(request):
 
 	trigger_events = utils.trigger_events(user=request.user)
 
-	rtn = trigger_events.toggle_light(pin=pin, state=action)
+	rtn = trigger_events.toggle_light(pin=int(pin), state=int(action))
 
 	context = {'light_success': rtn}
 
@@ -30,6 +30,6 @@ def lights_status(request):
 
 	sense_events = utils.sense_events(user=request.user)
 
-	context = {'light_status': sense_events.sense_light(pin=pin)}
+	context = {'light_status': sense_events.sense_light(pin=int(pin))}
 
 	return HttpResponse(json.dumps(context))

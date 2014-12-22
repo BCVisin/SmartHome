@@ -21,9 +21,39 @@ function change_garage_status(garage_door_open){
 	}
 }
 
+function change_light_status(this_a){
+	
+	$.getJSON("/lights/status/?pin=" + this_a.data('pin'), function(json) { 
+							
+							if(json.light_status == 1){
+								this_a.removeClass('btn-danger btn-warning').addClass('btn-success').text('Turn Off')
+							} else if (json.light_status == 2){
+								this_a.removeClass('btn-success btn-warning').addClass('btn-danger').text('Turn On')
+							} else if (json.light_status == 3){
+								this_a.removeClass('btn-danger btn-success').addClass('btn-warning').text('UNKNOWN')
+								}
+							})
+	
+}
+
 $().ready(function(){
 	
 	change_garage_status(garage_door_open)
+	
+	change_light_status($("#garage-zone-1"))
+	change_light_status($("#christmas-zone-1"))
+	
+	$(".light-button").on("click", function() {
+
+			if ($(this).text() == "Turn On"){
+				$.getJSON("/lights/trigger/?pin=" + $(this).data('pin') + "&action=1");
+				change_light_status($(this));
+			}else if ($(this).text() == "Turn Off"){
+				$.getJSON("/lights/trigger/?pin=" + $(this).data('pin') + "&action=2");
+				change_light_status($(this));
+			}
+		}
+	);
 	
 	$("#garage-trigger").on("click", function() {
 
@@ -80,13 +110,11 @@ $().ready(function(){
 												</tr>
 												<tr>
 													<td>Garage Lights:</td>
-														<td><a class="btn btn-sm btn-success" href="/lights/status/?pin=3&action=1" role="button">Turn On</a></td>
-														<td><a class="btn btn-sm btn-danger" href="/lights/status/?pin=3&action=2" role="button">Turn Off</a></td>
+														<td><a id="garage-zone-1" data-pin="3" class="btn btn-sm btn-warning light-button" href="#" role="button">UNKNOWN</a></td>
 												</tr>
 												<tr>
 													<td>X-mas Lights:</td>
-														<td><a class="btn btn-sm btn-success" href="/lights/status/?pin=4&action=1" role="button">Turn On</a></td>
-														<td><a class="btn btn-sm btn-danger" href="/lights/status/?pin=4&action=2" role="button">Turn Off</a></td>
+														<td><a id="christmas-zone-1" data-pin="4" class="btn btn-sm btn-warning light-button" href="#" role="button">UNKNOWN</a></td>
 												</tr>
 												<tr>
 													<td>Sprinklers:</td>

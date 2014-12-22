@@ -52,7 +52,6 @@ class trigger_events():
 			GPIO.setmode(GPIO.BCM)
 			GPIO.setup(pin, GPIO.OUT, initial=GPIO.HIGH)
 			GPIO.output(pin, signal_output)
-			GPIO.cleanup()
 
 		entry = lights_log(user=self.user, light_id=pin, action=state)
 		entry.save()
@@ -130,11 +129,11 @@ class sense_events():
 				signal_output = GPIO.LOW
 			else:
 				signal_output = GPIO.HIGH
-
-			GPIO.setmode(GPIO.BCM)
-			GPIO.setup(pin, GPIO.IN)
-			state = 1 if GPIO.input(pin) else 2
-			GPIO.cleanup()
+			try:
+				GPIO.setmode(GPIO.BCM)
+				state = 1 if GPIO.input(pin) else 2
+			except RuntimeError:
+				state = 2
 
 		entry = lights_log(user=self.user, light_id=pin, action=3, result=state)
 		entry.save()

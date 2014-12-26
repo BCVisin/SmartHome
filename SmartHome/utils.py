@@ -50,8 +50,8 @@ class trigger_events():
 				signal_output = GPIO.HIGH
 
 			GPIO.setmode(GPIO.BCM)
-			GPIO.setup(pin, GPIO.OUT, initial=GPIO.HIGH)
-			GPIO.output(pin, signal_output)
+			GPIO.setup(pin, GPIO.OUT, initial=signal_output)
+			#GPIO.output(pin, signal_output)
 
 		entry = lights_log(user=self.user, light_id=pin, action=state)
 		entry.save()
@@ -125,15 +125,11 @@ class sense_events():
 		if self.gpio_enabled:
 			import RPi.GPIO as GPIO
 
-			if state == 1:
-				signal_output = GPIO.LOW
-			else:
-				signal_output = GPIO.HIGH
 			try:
 				GPIO.setmode(GPIO.BCM)
 				state = 1 if GPIO.input(pin) else 2
 			except RuntimeError:
-				state = 2
+				pass
 
 		entry = lights_log(user=self.user, light_id=pin, action=3, result=state)
 		entry.save()

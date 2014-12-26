@@ -28,7 +28,6 @@ class trigger_events():
 			GPIO.output(gpio_pins.GARAGE_OPENER, GPIO.LOW)
 			time.sleep(.1)
 			GPIO.output(gpio_pins.GARAGE_OPENER, GPIO.HIGH)
-			GPIO.cleanup()
 
 		entry = garage_log(user=self.user, action=1)
 		entry.save()
@@ -91,8 +90,6 @@ class sense_events():
 
 			#if the garage is down the garage down senson will be 0
 			garage_down = not bool(GPIO.input(gpio_pins.GARAGE_SENSOR_DOWN))
-
-			GPIO.cleanup()
 
 			if garage_up:
 				if not garage_down:

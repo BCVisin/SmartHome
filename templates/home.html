@@ -44,14 +44,15 @@ $().ready(function(){
 	change_light_status($("#christmas-zone-1"))
 	
 	$(".light-button").on("click", function() {
-
+			var this_button = $(this);
+			
 			if ($(this).text() == "Turn On"){
 				$.getJSON("/lights/trigger/?pin=" + $(this).data('pin') + "&action=1", function(json) {
-					change_light_status($(this));
+					change_light_status(this_button);
 				});
 			}else if ($(this).text() == "Turn Off"){
 				$.getJSON("/lights/trigger/?pin=" + $(this).data('pin') + "&action=2", function(json) {
-					change_light_status($(this));
+					change_light_status(this_button);
 				});
 			}
 		}

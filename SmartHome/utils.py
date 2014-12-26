@@ -124,7 +124,7 @@ class sense_events():
 
 			try:
 				GPIO.setmode(GPIO.BCM)
-				state = 1 if GPIO.input(pin) else 2
+				state = 2 if GPIO.input(pin) else 1
 			except RuntimeError:
 				pass
 

@@ -46,11 +46,13 @@ $().ready(function(){
 	$(".light-button").on("click", function() {
 
 			if ($(this).text() == "Turn On"){
-				$.getJSON("/lights/trigger/?pin=" + $(this).data('pin') + "&action=1");
-				change_light_status($(this));
+				$.getJSON("/lights/trigger/?pin=" + $(this).data('pin') + "&action=1", function(json) {
+					change_light_status($(this));
+				});
 			}else if ($(this).text() == "Turn Off"){
-				$.getJSON("/lights/trigger/?pin=" + $(this).data('pin') + "&action=2");
-				change_light_status($(this));
+				$.getJSON("/lights/trigger/?pin=" + $(this).data('pin') + "&action=2", function(json) {
+					change_light_status($(this));
+				});
 			}
 		}
 	);

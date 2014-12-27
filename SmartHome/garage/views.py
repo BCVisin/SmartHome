@@ -15,7 +15,7 @@ def garage_door_trigger(request):
 
 	trigger_events.toggle_garage_door()
 
-	sense_events = utils.sense_events()
+	sense_events = utils.sense_events(user=request.user)
 
 	#how long it takes to open or close the garage
 	time.sleep(15)

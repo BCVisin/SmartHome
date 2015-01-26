@@ -8,9 +8,10 @@ from SmartHome.garage.models import garage_log
 
 class trigger_events():
 
-	def __init__(self, user):
+	def __init__(self, user=None, log_event=True):
 
 		self.user = user
+		self.log_event = log_event
 
 		try:
 			import RPi.GPIO as GPIO
@@ -29,8 +30,9 @@ class trigger_events():
 			time.sleep(.1)
 			GPIO.output(gpio_pins.GARAGE_OPENER, GPIO.HIGH)
 
-		entry = garage_log(user=self.user, action=1)
-		entry.save()
+		if self.log_event:
+			entry = garage_log(user=self.user, action=1)
+			entry.save()
 
 	def toggle_light(self, pin, state):
 
@@ -52,17 +54,19 @@ class trigger_events():
 			GPIO.setup(pin, GPIO.OUT, initial=signal_output)
 			#GPIO.output(pin, signal_output)
 
-		entry = lights_log(user=self.user, light_id=pin, action=state)
-		entry.save()
+		if self.log_event:
+			entry = lights_log(user=self.user, light_id=pin, action=state)
+			entry.save()
 
 		return True
 
 
 class sense_events():
 
-	def __init__(self, user):
+	def __init__(self, user=None, log_event=True):
 
 		self.user = user
+		self.log_event = log_event
 
 		try:
 			import RPi.GPIO as GPIO
@@ -107,8 +111,9 @@ class sense_events():
 					rtn = 'unknown'
 					stat = 3
 
-		entry = garage_log(user=self.user, action=2, result=stat)
-		entry.save()
+		if self.log_event:
+			entry = garage_log(user=self.user, action=2, result=stat)
+			entry.save()
 
 		return rtn
 
@@ -127,9 +132,9 @@ class sense_events():
 				state = 2 if GPIO.input(pin) else 1
 			except RuntimeError:
 				pass
-
-		entry = lights_log(user=self.user, light_id=pin, action=3, result=state)
-		entry.save()
+		if self.log_event:
+			entry = lights_log(user=self.user, light_id=pin, action=3, result=state)
+			entry.save()
 
 		return state
 

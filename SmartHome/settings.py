@@ -112,6 +112,8 @@ MIDDLEWARE_CLASSES = (
     # 'django.middleware.clickjacking.XFrameOptionsMiddleware',
 )
 
+SESSION_COOKIE_AGE = 60 * 60 * 24 * 1000 # 1000 days
+
 ROOT_URLCONF = 'SmartHome.urls'
 
 # Python dotted path to the WSGI application used by Django's runserver.
